@@ -36,7 +36,7 @@ public class MonoAlphabeticCipher implements Cipher{
 	 * @param secretAlphabet das neue Geheimalphabet welches gespeichert wird und mit dem gearbeitet wird
 	 * @throws BadParamException falls das Alphabet nicht den Erwartungen entspricht, also kleiner oder größer als 30 ist kommt es zu einer Fehlermeldung
 	 */
-	public void setSecretAlphabet(String secretAlphabet) throws BadParamException{
+	protected void setSecretAlphabet(String secretAlphabet) throws BadParamException{
 		try{//hier wird überprüft ob der übergebene Parameter null ist
 			secretAlphabet = secretAlphabet.replace('ß', '*');//wenn man das ß in Großbuchstaben umwandelt passiert es das es zu SS wird
 		}

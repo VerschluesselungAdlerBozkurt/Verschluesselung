@@ -48,7 +48,7 @@ public class TestfallMonoAlphabeticCipher {
 	 */
 	@Test(expected=BadParamException.class)
 	public void setSecretAlphabet1() throws BadParamException{
-		adler.cipher.MonoAlphabeticCipher m = new adler.cipher.MonoAlphabeticCipher();
+		adler.cipher.SubstitutionCipher m = new adler.cipher.SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 		try{
 			m.setSecretAlphabet(null);
 		}catch(BadParamException f){
@@ -65,7 +65,7 @@ public class TestfallMonoAlphabeticCipher {
 	 */
 	@Test(expected=BadParamException.class)
 	public void setSecretAlphabet2() throws BadParamException{
-		adler.cipher.MonoAlphabeticCipher m = new adler.cipher.MonoAlphabeticCipher();
+		adler.cipher.SubstitutionCipher m = new adler.cipher.SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 		try{
 			m.setSecretAlphabet("AABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖ");
 		}catch(BadParamException f){
@@ -82,7 +82,7 @@ public class TestfallMonoAlphabeticCipher {
 	 */
 	@Test(expected=BadParamException.class)
 	public void setSecretAlphabet3() throws BadParamException{
-		adler.cipher.MonoAlphabeticCipher m = new adler.cipher.MonoAlphabeticCipher();
+		adler.cipher.SubstitutionCipher m = new adler.cipher.SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 		try{
 			m.setSecretAlphabet("AABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖß");
 		}catch(BadParamException f){
@@ -97,8 +97,8 @@ public class TestfallMonoAlphabeticCipher {
 	 */
 	@Test
 	public void setSecretAlphabet4(){
-		adler.cipher.MonoAlphabeticCipher m = new adler.cipher.MonoAlphabeticCipher();
 		try{
+			adler.cipher.SubstitutionCipher m = new adler.cipher.SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 			m.setSecretAlphabet("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 		}catch(BadParamException f){
 			fail("MonoAlphabeticCipher-setSecretAlphabet fail");
@@ -129,8 +129,8 @@ public class TestfallMonoAlphabeticCipher {
 	 */
 	@Test
 	public void encrypt2(){
-		adler.cipher.MonoAlphabeticCipher m = new adler.cipher.MonoAlphabeticCipher();
 		try {
+			adler.cipher.SubstitutionCipher m = new adler.cipher.SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 			m.setSecretAlphabet("QWERTZßUIOPÜÄÖLKJHGFDSAYXCVBNM");
 			if(!(m.encrypt("bcd!").equals("WER!"))){
 				fail("MonoAlphabetic-encrypt fail");
@@ -164,8 +164,8 @@ public class TestfallMonoAlphabeticCipher {
 	 */
 	@Test
 	public void decrypt2(){
-		adler.cipher.MonoAlphabeticCipher m = new adler.cipher.MonoAlphabeticCipher();
 		try {
+			adler.cipher.SubstitutionCipher m = new adler.cipher.SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 			m.setSecretAlphabet("QWERTZßUIOPÜÄÖLKJHGFDSAYXCVBNM");
 			if(!(m.decrypt("WQE!").equals("bac!"))){
 				fail("MonoAlphabetic-encrypt fail");
