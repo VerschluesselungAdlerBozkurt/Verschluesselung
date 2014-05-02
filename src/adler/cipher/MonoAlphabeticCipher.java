@@ -16,7 +16,7 @@ public class MonoAlphabeticCipher implements Cipher{
 	 * Der Konstruktor speichert sich als Standard-Alphabet als Geheimalphabet
 	 */
 	public MonoAlphabeticCipher(){
-		this.secretAlphabet = "abcdefghijklmnopqrstuvwxyzäöüß";//speichert das Standartalphabet in das Attribut secretAlphabet
+		this.secretAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß";//speichert das Standartalphabet in das Attribut secretAlphabet
 	}
 
 

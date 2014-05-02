@@ -14,7 +14,7 @@ public class SubstitutionCipher extends MonoAlphabeticCipher{
 	/**
 	 * Der Konstruktor übergibt den Parameter an den super.Konstruktor, also der darüberliegende und
 	 * speichert sich dem Paramter als Geheimalphabet
-	 * @param secretAlphabet
+	 * @param secretAlphabet das Geheimalphabet welches übernommen werden soll
 	 * @throws BadParamException falls das Alphabet nicht den Erwartungen entspricht, also kleiner oder größer als 30 ist kommt es zu einer Fehlermeldung
 	 */
 	public SubstitutionCipher(String secretAlphabet) throws BadParamException{
