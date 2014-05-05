@@ -1,8 +1,8 @@
-package adler.test;
+package adlerbozkurt.test;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import adler.cipher.BadParamException;
+import adlerbozkurt.cipher.*;
 
 /**
  * Diese Klasse überprüft alle Methoden von der Klasse SubstitutionCipher mittel JUnit-Test
@@ -23,7 +23,7 @@ public class TestfallSubstitutionCipher {
 	@Test(expected=BadParamException.class)
 	public void SubstitutionCipher1() throws BadParamException{
 		try{
-			adler.cipher.SubstitutionCipher s = new adler.cipher.SubstitutionCipher(null);
+			SubstitutionCipher s = new SubstitutionCipher(null);
 		}catch(BadParamException f){
 			throw new BadParamException();
 		}
@@ -39,7 +39,7 @@ public class TestfallSubstitutionCipher {
 	@Test(expected=BadParamException.class)
 	public void SubstitutionCipher2() throws BadParamException{
 		try{
-			adler.cipher.SubstitutionCipher s = new adler.cipher.SubstitutionCipher("AABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖ");
+			SubstitutionCipher s = new SubstitutionCipher("AABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖ");
 		}catch(BadParamException f){
 			throw new BadParamException("SubstitutionCipher-KonstruktorFail erwartet den es sind nicht alle Buchstaben vorhanden");
 		}
@@ -55,7 +55,7 @@ public class TestfallSubstitutionCipher {
 	@Test(expected=BadParamException.class)
 	public void SubstitutionCipher3() throws BadParamException{
 		try{
-			adler.cipher.SubstitutionCipher s = new adler.cipher.SubstitutionCipher("AABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖß");
+			SubstitutionCipher s = new SubstitutionCipher("AABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖß");
 		}catch(BadParamException f){
 			throw new BadParamException("SubstitutionCipher-KonstruktorFail den es ist ein Buchstabe zu viel");
 		}
@@ -69,7 +69,7 @@ public class TestfallSubstitutionCipher {
 	@Test
 	public void setSecretAlphabet4(){
 		try{
-			adler.cipher.SubstitutionCipher s = new adler.cipher.SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
+			SubstitutionCipher s = new SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 		}catch(BadParamException f){
 			fail("SubstitutionCipher-Konstruktor fail");
 		}
@@ -82,7 +82,7 @@ public class TestfallSubstitutionCipher {
 	 */
 	@Test
 	public void getSecretAlphabet() throws BadParamException{
-		adler.cipher.SubstitutionCipher s = new adler.cipher.SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
+		SubstitutionCipher s = new SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 		if(!s.getSecretAlphabet().equals("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM")){
 			fail("SubstitutionCipher-getSecretAlphabet fail");
 		}
@@ -97,7 +97,7 @@ public class TestfallSubstitutionCipher {
 	 */
 	@Test(expected=BadParamException.class)
 	public void encrypt1() throws BadParamException{
-		adler.cipher.SubstitutionCipher s = new adler.cipher.SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
+		SubstitutionCipher s = new SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 		try{
 			s.encrypt(null);
 		}catch(BadParamException f){
@@ -111,7 +111,7 @@ public class TestfallSubstitutionCipher {
 	 */
 	@Test
 	public void encrypt2() throws BadParamException{
-		adler.cipher.SubstitutionCipher s = new adler.cipher.SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
+		SubstitutionCipher s = new SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 		try {
 			s.setSecretAlphabet("QWERTZßUIOPÜÄÖLKJHGFDSAYXCVBNM");
 			if(!(s.encrypt("bcd!").equals("WER!"))){
@@ -131,7 +131,7 @@ public class TestfallSubstitutionCipher {
 	 */
 	@Test(expected=BadParamException.class)
 	public void decrypt1() throws BadParamException{
-		adler.cipher.SubstitutionCipher s = new adler.cipher.SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
+		SubstitutionCipher s = new SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 		try{
 			s.decrypt(null);
 		}catch(BadParamException f){
@@ -146,7 +146,7 @@ public class TestfallSubstitutionCipher {
 	 */
 	@Test
 	public void decrypt2() throws BadParamException{
-		adler.cipher.SubstitutionCipher s = new adler.cipher.SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
+		SubstitutionCipher s = new SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
 		try {
 			s.setSecretAlphabet("QWERTZßUIOPÜÄÖLKJHGFDSAYXCVBNM");
 			if(!(s.decrypt("WQE!").equals("bac!"))){

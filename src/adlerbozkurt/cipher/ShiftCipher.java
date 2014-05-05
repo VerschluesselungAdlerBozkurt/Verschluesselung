@@ -1,4 +1,4 @@
-package adler.cipher;
+package adlerbozkurt.cipher;
 
 
 /**
@@ -28,6 +28,7 @@ public class ShiftCipher extends MonoAlphabeticCipher{
 	 * @param shiftvalue Wert der Verschiebung, wie weit das Geheimalphabet nach rechts verschoben werden soll
 	 * @throws BadParamException falls das Alphabet nicht den Erwartungen entspricht, also kleiner oder größer als 30 ist kommt es zu einer Fehlermeldung
 	 */
+	@Override
 	public void setShiftAmount(int shiftvalue) throws BadParamException{
 		while(shiftvalue > 30){//falls der übergebene größer 30 ist wird er um 30 subtrahiert, weil 31 ist gleich wie 1
 			shiftvalue -= 30;
@@ -37,7 +38,7 @@ public class ShiftCipher extends MonoAlphabeticCipher{
 					"\n"+"Bitte geben Sie den Parameter erneuert ein, aber diesmal im positiven Bereich!!!");//wirft eine Exception mit einer benutzerbasierten Meldung
 
 		}
-		String geheim = "abcdefghijklmnopqrstuvwxyzäöüß";//das Standard-Alphabet welches verschoben wird
+		String geheim = super.getSecretAlphabet();//das Standard-Alphabet welches verschoben wird
 		String speicher="";//speichervariabel wo das Geheimalphabet gespeichert werden soll
 		for(int i=0; i<geheim.length(); i++){
 			if((shiftvalue+i) >= geheim.length()){//falls der Wert größer oder gleich 30 ist
@@ -51,9 +52,5 @@ public class ShiftCipher extends MonoAlphabeticCipher{
 		} catch (BadParamException e) {//falls mit dem übergebenen Parameter etwas nicht stimmt kommt es zu einer Fehlermeldung
 			e.printStackTrace();
 		}
-	}
-	public static void main(String[] args) throws BadParamException{
-		ShiftCipher k = new ShiftCipher(1);
-		System.out.println(k.getSecretAlphabet());
 	}
 }

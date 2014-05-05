@@ -1,4 +1,4 @@
-package adler.cipher;
+package adlerbozkurt.cipher;
 
 
 /**
@@ -36,7 +36,7 @@ public class MonoAlphabeticCipher implements Cipher{
 	 * @param secretAlphabet das neue Geheimalphabet welches gespeichert wird und mit dem gearbeitet wird
 	 * @throws BadParamException falls das Alphabet nicht den Erwartungen entspricht, also kleiner oder größer als 30 ist kommt es zu einer Fehlermeldung
 	 */
-	protected void setSecretAlphabet(String secretAlphabet) throws BadParamException{
+	public void setSecretAlphabet(String secretAlphabet) throws BadParamException{
 		try{//hier wird überprüft ob der übergebene Parameter null ist
 			secretAlphabet = secretAlphabet.replace('ß', '*');//wenn man das ß in Großbuchstaben umwandelt passiert es das es zu SS wird
 		}
@@ -121,8 +121,10 @@ public class MonoAlphabeticCipher implements Cipher{
 	
 	@Override
 	public String decrypt(String text) throws BadParamException{
-		try{//hier wird überprüft ob der übergebene Parameter null ist
-			text=text.toUpperCase();//die Geheimsprache beinhaltet nur Großbuchstaben
+		try{//hier wird uebrprüft ob der übergebene Parameter null ist
+			text = text.replace('ß', '*');//wenn man das ß in Großbuchstaben umwandelt passiert es das es zu SS wird
+			text = text.toUpperCase();//die Geheimsprache beinhaltet nur Großbuchstaben
+			text = text.replace('*', 'ß');//wenn man das ß in Großbuchstaben umwandelt passiert es das es zu SS wird
 		}
 		catch(NullPointerException f){
 			throw new BadParamException("Der übergebene Parameter ist null"+
@@ -144,5 +146,12 @@ public class MonoAlphabeticCipher implements Cipher{
 			}
 		}
 		return entschluesselt;//gibt den entschlüsselten Text aus
+	}
+	
+	public void setKeyword(String keyword) throws BadParamException{
+		//
+	}
+	public void setShiftAmount(int shiftvalue) throws BadParamException{
+		//set-Methode von protected auf public darf ich aber nicht
 	}
 }

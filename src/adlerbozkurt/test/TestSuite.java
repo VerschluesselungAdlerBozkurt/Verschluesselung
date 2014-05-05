@@ -1,4 +1,4 @@
-package adler.test;
+package adlerbozkurt.test;
 
 import org.junit.runner.*;
 import org.junit.runners.*;
