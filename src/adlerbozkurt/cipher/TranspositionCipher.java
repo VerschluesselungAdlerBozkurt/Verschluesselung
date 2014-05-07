@@ -1,13 +1,13 @@
 package adlerbozkurt.cipher;
 
 /**
- * Die Klasse für das Gartenzaun-Verschlüsselungssystem
- * @author Hüseyin Bozkurt
+ * Die Klasse fÃ¼r das Gartenzaun-VerschlÃ¼sselungssystem
+ * @author HÃ¼seyin Bozkurt
  * @version 2014-05-03
  *
  */
 public class TranspositionCipher implements Cipher {
-	private int transpositionlvl; 
+	public int transpositionlvl; 
 
 //METHODS 
 public TranspositionCipher(int translvl) {
@@ -20,11 +20,11 @@ public void setTranspositionLevel(int lvl) {
     }
 }
 /**
- * Die encrypt-Methode, die den Text der als parameter übergeben wird, per Gartenzaun-Verschlüsselung verschlüsselt
- * Der Text wird als erstes in Großbuchstaben umgewandelt mit toUpperCase,
- * danach werden alle Lücken(Spaces) geschlossen mit replaceAll.
- * Das String Array wird vorerst mit "" gefüllt,
- * wobei die Richtigen buchstaben per modulo (%) eingefügt werden.
+ * Die encrypt-Methode, die den Text der als parameter Ã¼bergeben wird, per Gartenzaun-VerschlÃ¼sselung verschlÃ¼sselt
+ * Der Text wird als erstes in GroÃŸbuchstaben umgewandelt mit toUpperCase,
+ * danach werden alle LÃ¼cken(Spaces) geschlossen mit replaceAll.
+ * Das String Array wird vorerst mit "" gefÃ¼llt,
+ * wobei die Richtigen buchstaben per modulo (%) eingefÃ¼gt werden.
  * Bei der Ausgabe werden einfach die einzelnen Stellen des String-Arrays
  * in einen normalen String geschrieben.
  * @param text 
@@ -32,13 +32,10 @@ public void setTranspositionLevel(int lvl) {
  */
 @Override
 public String encrypt(String text) throws BadParamException {
-    //Nur Großbuchstaben
+    //Nur GroÃŸbuchstaben
     String largeText = text.toUpperCase();
     
-    //Entfernen der Spaces:
-    largeText = largeText.replaceAll(" ", "");
-    
-    //Array, Jede Stelle für eine Zeile, Füllen mit "" wert
+    //Array, Jede Stelle fÃ¼r eine Zeile, FÃ¼llen mit "" wert
     String[] crypt = new String[transpositionlvl];
     for(int i = 0; i < crypt.length; i++) {
     	crypt[i] = "";
@@ -52,7 +49,7 @@ public String encrypt(String text) throws BadParamException {
     //Ausgabe
     String cryptText = "";
     for(String subCrypt:crypt) {
-    	cryptText += subCrypt + "\n";
+    	cryptText += subCrypt;
     }
     
     return cryptText;
@@ -67,23 +64,28 @@ public String encrypt(String text) throws BadParamException {
  */
 @Override
 public String decrypt(String text) throws BadParamException {
-    //Array, Jede Stelle für eine Zeile
-    String[] crypt = text.split("\n");
-    
-    //Char Array, Jede Stelle ein Zeichen (Haupt Array Wörter)
-    char[][] cryptChars = new char[crypt.length][];
-    for(int i = 0; i < crypt.length; i++) {
-    	cryptChars[i] = crypt[i].toCharArray();
-    }
-    
-    //Auslesen des Char Arrays in umgekehrter Reihenfolge (Zuerst Inner und dann Outer Array)
-    String decryptText = "";
-    for(int i = 0; i < cryptChars[0].length; i++) 
-        for(int j = 0; j < cryptChars.length; j++) 
-            if(i < cryptChars[j].length) {
-            	decryptText += cryptChars[j][i];
-            }
-    
-    return decryptText;
+    //Array, Jede Stelle fÃ¼r eine Zeile
+	String largeText = text.toUpperCase(); 
+	//Array, Jede Stelle fï¿½r eine Zeile, Fï¿½llen mit "" wert 
+	String[] crypt = new String[transpositionlvl]; 
+	int teil = text.length()/transpositionlvl; 
+	for(int i = 0; i < crypt.length; i++) { 
+		crypt[i] = text.substring(i*teil,(i+1)*teil); 
+		System.out.println(crypt[i]); 
+		} 
+	//Char Array, Jede Stelle ein Zeichen (Haupt Array Wï¿½rter) 
+	char[][] cryptChars = new char[crypt.length][]; 
+	for(int i = 0; i < crypt.length; i++) { 
+		cryptChars[i] = crypt[i].toCharArray(); 
+		} 
+	//Auslesen des Char Arrays in umgekehrter Reihenfolge (Zuerst Inner und dann Outer Array) 
+	String decryptText = ""; 
+	for(int i = 0; i < cryptChars[0].length; i++) 
+		for(int j = 0; j < cryptChars.length; j++) 
+			if(i < cryptChars[j].length) { 
+				decryptText += cryptChars[j][i]; 
+			} 
+		return decryptText; 
 	}
 }
+
