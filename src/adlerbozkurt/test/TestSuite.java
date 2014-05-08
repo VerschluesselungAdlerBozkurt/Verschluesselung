@@ -12,6 +12,6 @@ import org.junit.runners.*;
 
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({TestfallMonoAlphabeticCipher.class,TestfallSubstitutionCipher.class})
+@Suite.SuiteClasses({TestfallMonoAlphabeticCipher.class,TestfallSubstitutionCipher.class,TestTranspositionCipher.class})
 public class TestSuite {
 }
