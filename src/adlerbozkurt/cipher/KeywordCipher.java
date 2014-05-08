@@ -12,7 +12,8 @@ import java.util.*;
 public class KeywordCipher extends MonoAlphabeticCipher{
 	private String keyword;
 
-
+	
+	
 	/**
 	 * Der Konstruktor bekommt als Parameter ein Schlüsselwort, mit dem wir uns dann eine Tabelle erstellen,
 	 * wo das Alphabet nach den Kritieren des Schlüsselwortes eingefügt werden und später wieder zu einem Geheimalphabet zusammengesetzt wird.
@@ -23,13 +24,42 @@ public class KeywordCipher extends MonoAlphabeticCipher{
 		this.setKeyword(keyword);//übergibt der Methode setKeyword das Schlüsselwort
 	}
 
+	
+	
+	/**
+	 * Diese Methode ist eine setter-Methode welche sich das übergebene Keyword in ein Attribut speichert
+	 * damit es dauerhaft abrufbar ist
+	 * @param keyword das Keyword welches für die entschlüsselung verwendet wird
+	 * @throws BadParamException falls übergebene Parameter nicht die Vorstellungen erfüllt kommt es zu einer Fehlermeldung 
+	 */
+	public void setKeyword(String keyword) throws BadParamException{
+		try{
+			if(!(keyword.equals(""))){//falls der Parameter nicht leer ist
+				this.keyword = keyword.toUpperCase();//das Keyword wird in großbuchstaben umgewandelt
+			}else{//falls der Parameter leer ist kommt es zu einer Fehlermeldung
+				throw new BadParamException("Der übergebene Parameter ist leer"+
+						"\n"+"Bitte geben Sie das Keyword erneuert ein!!!");//wirft eine Exception mit einer benutzerbasierten Meldung
+			}
+		}catch(java.lang.NullPointerException f){//falls der Parameter null ist kommt es zu einer Fehlermeldung
+			throw new BadParamException("Der übergebene Parameter ist null"+
+					"\n"+"Bitte geben Sie das Keyword erneuert ein!!!");//wirft eine Exception mit einer benutzerbasierten Meldung
+		}
+	}
+	
+	
+	
+	/**
+	 * Diese Methode wird von MonoAlphabeticCipher geerbt welche in dieser Klasse überschrieben wird
+	 * @param text der Text der entschlüsselt werden soll
+	 * @return der entschlüsselte Text wird zurückgegeben
+	 * @throws BadParamException falls übergebene Parameter nicht die Vorstellungen erfüllt kommt es zu einer Fehlermeldung
+	 */
 	@Override
 	public String decrypt(String text) throws BadParamException {
-		String keyword = this.keyword;
+		String keyword = this.keyword;//das Keyword wird an eine Variable übertragen
 		String keyword1 = this.keyword;//speichern des Schlüsselwortes in einer Zwischenvariabele
-		String text1 = text;
-		String geheim = text1;//das Geheimtext
-		int rows;
+		String geheim = text;//das Geheimtext der entschlüsselt werden soll
+		int rows;//Zeilen für die Tabelle
 		try{
 			rows = geheim.length() / keyword.length();//berechnung der Zeilen von der Tabelle
 			if(geheim.length() % keyword.length() != 0)rows++;
@@ -51,12 +81,10 @@ public class KeywordCipher extends MonoAlphabeticCipher{
 			keyword = keyword.replaceFirst(keyword.charAt(indexMin)+"", "");//löscht den Buchstaben aus dem Schlüsselwort
 			indexMin = 0;
 		}
-
 		HashMap<Character,Integer> liste1 = new HashMap<Character,Integer>();//erstellen einer unsortierten Map
 		for(int i = 0; i<keyword1.length(); i++){
 			liste1.put(liste.get(i+1),(i+1));//fügt die Value von der Sortierten Map nun als Key in die unsortierte Map
 		}
-
 		//fügt das Alphabet in die Character-Table Zeile für Zeile 
 		for(int i = 0, j = 0, zahler=0; i<rows; i++){
 			try{
@@ -72,7 +100,6 @@ public class KeywordCipher extends MonoAlphabeticCipher{
 				if(j == keyword1.length())break;
 			}
 		}
-
 		//liest die Tabelle aus, in einer gewissen Reihenfolge der Spalten
 		String geheimalphabet = "";//diese Variable speichert sich Geheimalphabet
 		for(int i = 0; i<rows; i++){
@@ -83,12 +110,19 @@ public class KeywordCipher extends MonoAlphabeticCipher{
 		return geheimalphabet;
 	}
 
+	
+	
+	/**
+	 * Diese Methode wird von MonoAlphabeticCipher geerbt welche in dieser Klasse überschrieben wird
+	 * @param text der Text der verschlüsselt werden soll
+	 * @return der verschlüsselte Text wird zurückgegeben
+	 * @throws BadParamException falls übergebene Parameter nicht die Vorstellungen erfüllt kommt es zu einer Fehlermeldung
+	 */
 	@Override
 	public String encrypt(String text) throws BadParamException {
 		String keyword = this.keyword;
 		String keyword1 = this.keyword;//speichern des Schlüsselwortes in einer Zwischenvariabele
-		String text1 = text;
-		String geheim = text1;//das Geheimtext
+		String geheim = text;//das Geheimtext
 		int rows;
 		try{
 			rows = geheim.length() / keyword.length();//berechnung der Zeilen von der Tabelle
@@ -111,12 +145,10 @@ public class KeywordCipher extends MonoAlphabeticCipher{
 			keyword = keyword.replaceFirst(keyword.charAt(indexMin)+"", "");//löscht den Buchstaben aus dem Schlüsselwort
 			indexMin = 0;
 		}
-
 		HashMap<Character,Integer> liste1 = new HashMap<Character,Integer>();//erstellen einer unsortierten Map
 		for(int i = 0; i<keyword1.length(); i++){
 			liste1.put(liste.get(i+1),(i+1));//fügt die Value von der Sortierten Map nun als Key in die unsortierte Map
 		}
-
 		//fügt das Alphabet in die Character-Table Zeile für Zeile  
 		for(int i = 0, j = 0, zahler = 0; i<keyword1.length(); i++, zahler++){
 			try{
@@ -139,20 +171,5 @@ public class KeywordCipher extends MonoAlphabeticCipher{
 			}
 		}
 		return geheimalphabet;
-	}
-
-	/**
-	 * Diese Klasse erstellt anhand des Schlüsselworts das Geheimalphabet welches in einer Tabelle generiert wird
-	 * @param keyword das Schlüsselwort welches für die Verschlüsselung zuständig ist
-	 */
-	@Override
-	public void setKeyword(String keyword) throws BadParamException{
-		this.keyword = keyword.toUpperCase();
-	}
-
-	public static void main(String[] args) throws BadParamException{
-		KeywordCipher k = new KeywordCipher("ADLER");
-		System.out.println(k.encrypt("BUY SOME MILK AND EGGS"));
-		System.out.println(k.decrypt(k.encrypt("BUY SOME MILK AND EGGS")));
 	}
 }

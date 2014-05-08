@@ -28,7 +28,6 @@ public class ShiftCipher extends MonoAlphabeticCipher{
 	 * @param shiftvalue Wert der Verschiebung, wie weit das Geheimalphabet nach rechts verschoben werden soll
 	 * @throws BadParamException falls das Alphabet nicht den Erwartungen entspricht, also kleiner oder größer als 30 ist kommt es zu einer Fehlermeldung
 	 */
-	@Override
 	public void setShiftAmount(int shiftvalue) throws BadParamException{
 		while(shiftvalue > 30){//falls der übergebene größer 30 ist wird er um 30 subtrahiert, weil 31 ist gleich wie 1
 			shiftvalue -= 30;

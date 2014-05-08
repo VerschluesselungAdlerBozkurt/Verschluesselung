@@ -1,60 +1,75 @@
 package adlerbozkurt.gui;
 
 import java.awt.event.*;
+import javax.swing.JTextArea;
 import adlerbozkurt.cipher.*;
 
+
+/**
+ * Diese Klasse stellt den Controller der GUI dar, also er enthält alle Listener für die GUI Elemente
+ * @author Philipp Adler
+ * @version 06-05-2014
+ */
+
+
 public class CipherController implements ActionListener{
-	private MonoAlphabeticCipher[] m;
+	private MonoAlphabeticCipher m;
 	private CipherGui g;
 	public CipherController() throws BadParamException{
-		this.m = new MonoAlphabeticCipher[3];
-		this.m[0] = new SubstitutionCipher("QWERTZUßIOPÜÄÖLKJHGFDSAYXCVBNM");
-		this.m[1] = new KeywordCipher("");
-		this.m[2] = new ShiftCipher(0);
-		this.g = new CipherGui(this,this.m);
+		this.g = new CipherGui(this);
 	}
 
-
+	/**
+	 * Diese Methode ist der ActionListener welcher z.B beim drücken des Buttons ausgelöst wird
+	 * @param e das Event welches beim Drücken es Button erzeugt wird.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e){
-		try {
-			this.m[2].setSecretAlphabet(this.m[0].getSecretAlphabet());
-			this.m[2].setShiftAmount(this.g.getValue());
-			this.m[0].setSecretAlphabet(this.m[2].getSecretAlphabet());
-			this.g.setGeheim(this.m[2].getSecretAlphabet());
-		} catch (BadParamException e2) {
-			e2.printStackTrace();
-		}
-		if(e.getActionCommand().equals("encrypt")){
+		JTextArea[] felder = this.g.textfelder();
+		if(e.getActionCommand().equals("encrypt")){//beim drücken des encrypt Button von MonoalphabetcCipher
 			try {
-				this.g.ausgeben(this.m[0].encrypt(this.g.eingabe()));
+				this.m = new SubstitutionCipher(this.g.getGeheimalphabet());//erzeugt SubstitutionCipher Objekt
+				this.g.setGeheimalphabetbeschrieftung(this.m.getSecretAlphabet());
+				felder[1].setText(this.m.encrypt(felder[0].getText()));//verschlüsselt den Text und übergibt es der TextArea
 			} catch (BadParamException e1) {
-				e1.printStackTrace();
+				try {
+					this.m = new SubstitutionCipher(this.g.getGeheimalphabetbeschrieftung());
+					felder[1].setText(this.m.encrypt(felder[0].getText()));//verschlüsselt den Text und übergibt es der TextArea
+				} catch (BadParamException e2) {
+				}
 			}
 		}
+
 		if(e.getActionCommand().equals("decrypt")){
 			try {
-				this.g.ausgeben(this.m[0].decrypt(this.g.eingabe()));
+				this.m = new SubstitutionCipher(this.g.getGeheimalphabet());//erzeugt SubstitutionCipher Objekt
+				this.g.setGeheimalphabetbeschrieftung(this.m.getSecretAlphabet());
+				felder[1].setText(this.m.decrypt(felder[0].getText()));//entschlüsselt den Text und übergibt es der TextArea
 			} catch (BadParamException e1) {
-				e1.printStackTrace();
+				try {
+					this.m = new SubstitutionCipher(this.g.getGeheimalphabetbeschrieftung());
+					felder[1].setText(this.m.decrypt(felder[0].getText()));//entschlüsselt den Text und übergibt es der TextArea
+				} catch (BadParamException e2) {
+				}
 			}
 		}
-		
-		
+
+
 		if(e.getActionCommand().equals("encrypt1")){
 			try {
-				this.m[1].setKeyword(this.g.getKeyword());
-				this.g.ausgeben1(this.m[1].encrypt(this.g.eingabe1()));
+				this.m = new KeywordCipher(this.g.getKeyword());//erzeugt KeywordCipher Objekt
+				felder[3].setText(this.m.encrypt(felder[2].getText()));//verschlüsselt den Text und übergibt es der TextArea
 			} catch (BadParamException e1) {
-				e1.printStackTrace();
+
 			}
 		}
 		if(e.getActionCommand().equals("decrypt1")){
 			try {
-				this.g.ausgeben1(this.m[1].decrypt(this.g.eingabe1()));
+				this.m = new KeywordCipher(this.g.getKeyword());//erzeugt KeywordCipher Objekt
+				felder[3].setText(this.m.decrypt(felder[2].getText()));//entschlüsselt den Text und übergibt es der TextArea
 			} catch (BadParamException e1) {
-				e1.printStackTrace();
 			}
 		}
+		this.g.settextfelder(felder);
 	}
 }
