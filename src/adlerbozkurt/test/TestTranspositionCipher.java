@@ -171,11 +171,10 @@ public class TestTranspositionCipher {
 	@Test
 	public void decrypt2(){
 		try {
-			TranspositionCipher m = new TranspositionCipher(2);
-			//System.out.println(m.decrypt("ALRDE"));
-			//if(!(m.decrypt("ALRDE").equals("ADLER"))){
-				//fail("MonoAlphabetic-encrypt fail");
-			//}
+			TranspositionCipher m = new TranspositionCipher(3);
+			if(!(m.decrypt("HLAOL").equals("HALLO"))){
+				fail("MonoAlphabetic-encrypt fail");
+			}
 		} catch (BadParamException e) {
 			fail("MonoAlphabetic-encrypt fail");
 		}

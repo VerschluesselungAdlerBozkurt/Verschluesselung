@@ -67,21 +67,23 @@ public class TranspositionCipher implements Cipher {
 	@Override
 	public String decrypt(String text) throws BadParamException {
 		//Array, Jede Stelle f�r eine Zeile, F�llen mit "" wert 
+ 		String[] decrypt = new String[transpositionlvl]; 
 		String[] crypt = new String[transpositionlvl]; 
-		int teil = text.length()/transpositionlvl;
-		int teil2;
-		if(text.length()%transpositionlvl != 0){
-			teil2 = teil+1;
-		}else{
-			teil2 = teil;
-		}
+		
 		for(int i = 0; i < crypt.length; i++) {
-			if(i == 0){
-				crypt[i] = text.substring(i*teil,(i+1)*teil2);
-			}else{
-				crypt[i] = text.substring(teil2 + teil*(i-1),(i+1)*teil+1);
-			}
-		} 
+			decrypt[i] = "";
+		}
+		for(int i = 0; i < text.length(); i++) {
+			decrypt[i%decrypt.length] += text.charAt(i);
+		}
+		int zahl = 0;
+		int zahl1 = 0;
+		for(int i = 0;i < crypt.length; i++){
+			zahl = zahl1;
+			zahl1 += decrypt[i].length();
+			crypt[i] = text.substring(zahl,zahl1);
+		}
+		
 		//Char Array, Jede Stelle ein Zeichen (Haupt Array W�rter) 
 		char[][] cryptChars = new char[crypt.length][]; 
 		for(int i = 0; i < crypt.length; i++) { 
@@ -95,10 +97,5 @@ public class TranspositionCipher implements Cipher {
 					decryptText += cryptChars[j][i]; 
 				} 
 		return decryptText; 
-	}
-	public static void main(String[] args) throws BadParamException{
-		TranspositionCipher m = new TranspositionCipher(3);
-		System.out.println(m.encrypt("ADLERR"));
-		System.out.println(m.decrypt("AEDRLR"));
 	}
 }
