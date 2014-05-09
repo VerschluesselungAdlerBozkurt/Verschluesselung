@@ -10,15 +10,19 @@ import adlerbozkurt.cipher.*;
 /**
  * Diese Klasse stellt den Controller der GUI dar, also er enthält alle Listener für die GUI Elemente
  * @author Philipp Adler
+ * @author Bozkurt Huseyin
  * @version 06-05-2014
  */
 
 
 public class CipherController implements ActionListener{
-	private MonoAlphabeticCipher m;
-	private TranspositionCipher mm;
+	private Cipher m;
 	private CipherGui g;
-	public CipherController() throws BadParamException{
+	
+	/**
+	 * Der Konstruktor erzeugt die Gui und gibt als Parameter sich weiter um auf die Klicks der Button zu reagieren
+	 */
+	public CipherController(){
 		this.g = new CipherGui(this);
 	}
 
@@ -35,11 +39,11 @@ public class CipherController implements ActionListener{
 					this.m = new ShiftCipher(this.g.getValue());
 				}
 				else  if(this.g.getRadioButton() == 2) {
-					TranspositionCipher mm = new TranspositionCipher(this.g.getValue());
+					this.m = new TranspositionCipher(this.g.getValue());
 				}
 				else {
 					this.m = new SubstitutionCipher(this.g.getGeheimalphabet());//erzeugt SubstitutionCipher Objekt
-					this.g.setGeheimalphabetbeschrieftung(this.m.getSecretAlphabet());
+					this.g.setGeheimalphabetbeschrieftung(this.g.getGeheimalphabet());
 				}
 				felder[1].setText(this.m.encrypt(felder[0].getText()));//verschlüsselt den Text und übergibt es der TextArea
 			} catch (BadParamException e1) {
@@ -53,8 +57,16 @@ public class CipherController implements ActionListener{
 
 		if(e.getActionCommand().equals("decrypt")){
 			try {
-				this.m = new SubstitutionCipher(this.g.getGeheimalphabet());//erzeugt SubstitutionCipher Objekt
-				this.g.setGeheimalphabetbeschrieftung(this.m.getSecretAlphabet());
+				if(this.g.getRadioButton() == 1) {
+					this.m = new ShiftCipher(this.g.getValue());
+				}
+				else  if(this.g.getRadioButton() == 2) {
+					this.m = new TranspositionCipher(this.g.getValue());
+				}
+				else {
+					this.m = new SubstitutionCipher(this.g.getGeheimalphabet());//erzeugt SubstitutionCipher Objekt
+					this.g.setGeheimalphabetbeschrieftung(this.g.getGeheimalphabet());
+				}
 				felder[1].setText(this.m.decrypt(felder[0].getText()));//entschlüsselt den Text und übergibt es der TextArea
 			} catch (BadParamException e1) {
 				try {

@@ -12,6 +12,7 @@ import adlerbozkurt.cipher.SubstitutionCipher;
 /**
  * Diese Klasse stellt die GUI dar welche die einzelnen Cipher Methoden testet
  * @author Philipp Adler
+ * @author Bozkurt Huseyin
  * @version 06-05-2014
  */
 public class CipherGui extends JFrame{
@@ -37,6 +38,7 @@ public class CipherGui extends JFrame{
 
 	/**
 	 * Diese Methode erzeugt die GUI für Benutzer um die Funktion der Cipher zu testen
+	 * @author Adler,Huseyin
 	 */
 	public void start(){
 		Font style = new Font("Serif", Font.BOLD, 30);
@@ -205,7 +207,7 @@ public class CipherGui extends JFrame{
 	/**
 	 * Diese Methode gibt das ShiftValue des Benutzers welche für die ver- oder entschlüsselung verwendet wird zurück
 	 * @return der Value welche das Geheimalphabet um die Anzahl in eine Richtung verschiebt zurück
-	 * @author Philipp Adler
+	 * @author Bozkurt Huseyin
 	 */
 	public int getValue(){
 		return this.value.getSelectedIndex();
@@ -241,6 +243,11 @@ public class CipherGui extends JFrame{
 		return this.geheimalphabet.getText().replaceAll("Cipher Alphabet:  ", "");
 	}
 
+	/**
+	 * Diese Methode gibt aus ob ein RadioButton ausgewählt wurde
+	 * @return welcher RadioButton angeklickt wurde
+	 * @author Bozkurt Huseyin
+	 */
 	public int getRadioButton() {
 		if(this.jrb[0].isSelected()) {
 			return 1;

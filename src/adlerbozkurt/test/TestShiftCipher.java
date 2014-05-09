@@ -23,7 +23,7 @@ public class TestShiftCipher {
 	 * @throws BadParamException gibt eine Fehlermeldung aus welche den Benutzer darauf anspricht, 
 	 * das er was falsch übergeben hat
 	 */
-	@Test(expected=BadParamException.class)
+	@Test
 	public void ShiftCipher1() throws BadParamException{
 		try{
 			ShiftCipher m = new ShiftCipher(0);
@@ -58,7 +58,7 @@ public class TestShiftCipher {
 	@Test
 	public void ShiftCipher3() throws BadParamException{
 		try{
-			ShiftCipher m = new ShiftCipher(1);
+			ShiftCipher m = new ShiftCipher(31);
 		}catch(BadParamException f){
 			fail("Shift-Konstruktor fail");
 		}
@@ -69,7 +69,7 @@ public class TestShiftCipher {
 	 * Diese Methode überprüft eine Variante von setShiftAmount
 	 * @throws BadParamException falsche eingabe des Users
 	 */
-	@Test(expected=BadParamException.class)
+	@Test
 	public void setShiftAmount1() throws BadParamException{
 		try{
 			ShiftCipher m = new ShiftCipher(1);
@@ -89,8 +89,8 @@ public class TestShiftCipher {
 	public void setShiftAmount2() throws BadParamException{
 		try{
 			ShiftCipher m = new ShiftCipher(1);
-			m.setShiftAmount(Integer.parseInt(null));
-		}catch(NumberFormatException f){
+			m.setShiftAmount(-1);
+		}catch(BadParamException f){
 			throw new BadParamException();
 		}
 	}
@@ -120,7 +120,7 @@ public class TestShiftCipher {
 	public void encrypt2(){
 		try {
 			ShiftCipher m = new ShiftCipher(1);
-			if(!(m.encrypt("BOZKURT").equals("OTBRZ Z U"))){
+			if(!(m.encrypt("BOZKURT").equals("CPÄLVSU"))){
 				fail("Shift-encrypt fail");
 			}
 		} catch (BadParamException e) {

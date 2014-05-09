@@ -5,6 +5,7 @@ import java.util.*;
 
 /**
  * Diese Klasse erstellt anhand eines Schlüsselwortes ein Geheimalphabet
+ * Ist ist nicht das was gefordert war aber es wurde mit der Frau Professor geklärt, das es in ordnung geht
  * @author Philipp Adler
  * @version 2014-04-16
  */
