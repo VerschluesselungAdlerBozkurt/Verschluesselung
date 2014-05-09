@@ -20,8 +20,9 @@ public class CipherGui extends JFrame{
 	private JTextField keyword,geheim;//Hier wird das Keyword oder das Geheimalphabet eingegeben
 	private JLabel geheimalphabet;//Beschriefung des Geheimalphabets
 	private JComboBox<Integer> value;//für ShiftCipher um das Alphabet zu verschieben
-	
-	
+	private JRadioButton[] jrb;
+
+
 	/**
 	 * Diese Konstruktor speichert sich den Controller in ein Attribut für die Listener und führ die start Methode aus
 	 * welche die GUI erzeugt
@@ -32,8 +33,8 @@ public class CipherGui extends JFrame{
 		this.start();//erzeugt mit dieser Methode die Grafik
 	}
 
-	
-	
+
+
 	/**
 	 * Diese Methode erzeugt die GUI für Benutzer um die Funktion der Cipher zu testen
 	 */
@@ -41,7 +42,7 @@ public class CipherGui extends JFrame{
 		Font style = new Font("Serif", Font.BOLD, 30);
 		Font text = new Font(Font.DIALOG,Font.PLAIN , 20);
 		JTabbedPane auswahl=new JTabbedPane();//erzeugt ein JTabbedPane
-		JPanel[] panels = new JPanel[11];
+		JPanel[] panels = new JPanel[12];
 		for(int i = 0; i<panels.length; i++){
 			panels[i] = new JPanel();
 		}
@@ -80,7 +81,7 @@ public class CipherGui extends JFrame{
 				panels[1].add(button[i]);
 			}
 		}
-		
+
 		//Textarea für die Message die ver- oder entschlüsselt werden soll
 		panels[2].setLayout(new BorderLayout());
 		panels[2].add(this.felder[0]);
@@ -100,10 +101,23 @@ public class CipherGui extends JFrame{
 		this.value = new JComboBox<Integer>(zahlen);
 
 		//Die Darstellung des Alphabet und dem Geheimalphabet
-		panels[4].setLayout(new GridLayout(4, 1));
+		panels[4].setLayout(new GridLayout(5, 1));
 		this.geheimalphabet = new JLabel("Cipher Alphabet:  ");
 		this.geheim = new JTextField(30);
+		String[] rtext = { "ShiftCipher", "TranspositionCipher" };
+		jrb = new JRadioButton[2];
+		ButtonGroup grp = new ButtonGroup();
+		JPanel buttonpanel = new JPanel();
+		buttonpanel.setLayout(new GridLayout(1,2));
+		for(int i = 0; i < rtext.length;i++) {
+			jrb[i] = new JRadioButton(rtext[i]);
+			grp.add(jrb[i]);
+			buttonpanel.add(jrb[i]);
+		}
 		panels[4].add(beschrieftungen[3]);
+		panels[4].add(buttonpanel);
+
+
 		panels[4].add(value);
 		panels[4].add(geheimalphabet);
 		panels[4].add(this.geheim);
@@ -117,7 +131,7 @@ public class CipherGui extends JFrame{
 
 
 		//nächstes Fenster für KeywordCipher
-		
+
 		//Textfeld für das Keyword + Beschrieftung
 		panels[6].setLayout(new GridLayout(2,1));
 		this.keyword = new JTextField();
@@ -142,7 +156,7 @@ public class CipherGui extends JFrame{
 		panels[9].add(panels[8]);
 		auswahl.add("KeywordCipher",panels[9]);
 
-		
+
 		//Elemente hinzufügen
 		panels[0].add(beschrieftungen[0],BorderLayout.NORTH);
 		panels[0].add(auswahl);
@@ -153,7 +167,7 @@ public class CipherGui extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
-	
+
 	/**
 	 * Diese Methode gibt alle Textfelder also Eingabe- und Ausgabefelder zurück
 	 * @return die Textfelder wo der Benutzer seine Eingaben betätigt hat
@@ -162,8 +176,8 @@ public class CipherGui extends JFrame{
 	public JTextArea[] textfelder(){
 		return this.felder;
 	}
-	
-	
+
+
 	/**
 	 * Diese Methode erzeugt im Ausgabe Textfeld den ver- oder entschlüsselten Text
 	 * @param felder die Textfelder welcher bearbeitet werden
@@ -177,7 +191,7 @@ public class CipherGui extends JFrame{
 		}
 	}
 
-	
+
 	/**
 	 * Diese Methode gibt das Keyword des Benutzers welche für die ver- oder entschlüsselung verwendet wird zurück
 	 * @return das eingegeben Keyword
@@ -187,7 +201,7 @@ public class CipherGui extends JFrame{
 		return this.keyword.getText();
 	}
 
-	
+
 	/**
 	 * Diese Methode gibt das ShiftValue des Benutzers welche für die ver- oder entschlüsselung verwendet wird zurück
 	 * @return der Value welche das Geheimalphabet um die Anzahl in eine Richtung verschiebt zurück
@@ -197,7 +211,7 @@ public class CipherGui extends JFrame{
 		return this.value.getSelectedIndex();
 	}
 
-	
+
 	/**
 	 * Diese Methode gibt das Geheimalphabet zurück
 	 * @return ausgabe des Geheimalphabets
@@ -206,8 +220,8 @@ public class CipherGui extends JFrame{
 	public String getGeheimalphabet(){
 		return this.geheim.getText();
 	}
-	
-	
+
+
 	/**
 	 * Diese Methode ändert das aktuelle Geheimalphabet
 	 * @param text das neue Geheimalphabet welches das alte ersetzen soll
@@ -216,8 +230,8 @@ public class CipherGui extends JFrame{
 	public void setGeheimalphabetbeschrieftung(String text){
 		this.geheimalphabet.setText("Cipher Alphabet:  "+text);
 	}
-	
-	
+
+
 	/**
 	 * Diese Methode gibt den das Geheimalphabet von der Beschrieftung zurück
 	 * @return ausgabe des Geheimalphabets
@@ -226,4 +240,17 @@ public class CipherGui extends JFrame{
 	public String getGeheimalphabetbeschrieftung(){
 		return this.geheimalphabet.getText().replaceAll("Cipher Alphabet:  ", "");
 	}
+
+	public int getRadioButton() {
+		if(this.jrb[0].isSelected()) {
+			return 1;
+		}
+		else if(this.jrb[1].isSelected()) {
+			return 2;
+		}
+		else{
+			return -1;
+		}
+	}
 }
+

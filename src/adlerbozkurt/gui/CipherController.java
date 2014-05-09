@@ -1,7 +1,9 @@
 package adlerbozkurt.gui;
 
 import java.awt.event.*;
+
 import javax.swing.JTextArea;
+
 import adlerbozkurt.cipher.*;
 
 
@@ -14,6 +16,7 @@ import adlerbozkurt.cipher.*;
 
 public class CipherController implements ActionListener{
 	private MonoAlphabeticCipher m;
+	private TranspositionCipher mm;
 	private CipherGui g;
 	public CipherController() throws BadParamException{
 		this.g = new CipherGui(this);
@@ -28,8 +31,16 @@ public class CipherController implements ActionListener{
 		JTextArea[] felder = this.g.textfelder();
 		if(e.getActionCommand().equals("encrypt")){//beim drücken des encrypt Button von MonoalphabetcCipher
 			try {
-				this.m = new SubstitutionCipher(this.g.getGeheimalphabet());//erzeugt SubstitutionCipher Objekt
-				this.g.setGeheimalphabetbeschrieftung(this.m.getSecretAlphabet());
+				if(this.g.getRadioButton() == 1) {
+					this.m = new ShiftCipher(this.g.getValue());
+				}
+				else  if(this.g.getRadioButton() == 2) {
+					TranspositionCipher mm = new TranspositionCipher(this.g.getValue());
+				}
+				else {
+					this.m = new SubstitutionCipher(this.g.getGeheimalphabet());//erzeugt SubstitutionCipher Objekt
+					this.g.setGeheimalphabetbeschrieftung(this.m.getSecretAlphabet());
+				}
 				felder[1].setText(this.m.encrypt(felder[0].getText()));//verschlüsselt den Text und übergibt es der TextArea
 			} catch (BadParamException e1) {
 				try {
